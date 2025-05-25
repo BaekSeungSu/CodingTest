@@ -1,4 +1,4 @@
-// 백준 3986 : 좋은 단어
+// 백준 10799 : 쇠막대기
 
 #include<bits/stdc++.h>
 using namespace std;

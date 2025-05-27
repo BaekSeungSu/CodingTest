@@ -27,10 +27,3 @@ string solution(string s) {
 
     return answer;
 }
-
-int main() {
-    string a;
-    a = solution("1 2 3 4");
-
-    cout << a << endl;
-}

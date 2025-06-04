@@ -5,12 +5,11 @@
 using namespace std;
 
 int solution(string s) {
-    vector<string> V1 = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-    vector<string> V2 = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    vector<string> v = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
     
-    for(int i=0; i<V1.size(); i++)
+    for(int i=0; i<v.size(); i++)
     {
-        s = regex_replace(s, regex(V1[i]), V2[i]);
+        s = regex_replace(s, regex(v[i]), to_string(i));
     }
     
     return stoi(s);

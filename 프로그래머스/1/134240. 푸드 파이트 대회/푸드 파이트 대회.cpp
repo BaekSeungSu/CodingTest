@@ -7,19 +7,9 @@ string solution(vector<int> food) {
     string answer = "";
     
     
-    for(int i=1; i<food.size(); i++)
+    for(int i= 1; i<food.size(); i++)
     {
-        for(int j = 0; j < food[i]/2;j++)
-        {
-            answer+=to_string(i);
-        }
-    }
-    for(int i=food.size()-1; i>=1; i--)
-    {
-        for(int j = 0; j <food[i]/2;j++)
-        {
-            answer+=to_string(i);
-        }
+        answer.insert(answer.size()/2, food[i]/2 * 2, char(i) + '0');
     }
     
     answer.insert(answer.size()/2, "0");

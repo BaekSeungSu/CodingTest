@@ -1,47 +1,42 @@
-// 백준 3273 : 두 수의 합
-
 #include<bits/stdc++.h>
 using namespace std;
-
-int Arr[100001];
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+	cin.tie(nullptr); cout.tie(nullptr);
 
-	int N, X, result = 0;
-	cin >> N;
-	for (int i = 0; i < N; i++)
+	int n, x, result = 0;
+	cin >> n;
+
+	vector<int> A(n, 0);
+
+	for (int i = 0; i < n; i++)
 	{
-		cin >> Arr[i];
+		cin >> A[i];
 	}
-	cin >> X;
+	cin >> x;
 
-	sort(Arr, Arr + N);
+	sort(A.begin(), A.end());
 
-	int s = 0;
-	int e = N - 1;
-
-	while(s < e)
+	int s = 0, e = n - 1;
+	while (s < e)
 	{
-		if (Arr[s] + Arr[e] == X)
+		if (A[s] + A[e] == x)
 		{
 			result++;
 			s++;
 			e--;
 		}
-		else if (Arr[s] + Arr[e] > X)
+		else if (A[s] + A[e] > x)
 		{
 			e--;
 		}
-		else 
+		else
 		{
 			s++;
 		}
 	}
 
 	cout << result;
-
-	return 0;
 }

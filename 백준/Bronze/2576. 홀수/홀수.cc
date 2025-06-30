@@ -1,35 +1,31 @@
-// 백준 2576번 : 홀수
 #include<bits/stdc++.h>
-
 using namespace std;
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+	cin.tie(nullptr), cout.tie(nullptr);
 
-	int Sum = 0;
-	int Min = 100;
+	int m= 99, result = 0;
+	bool isodd = false;
 
 	for (int i = 0; i < 7; i++)
 	{
-		int A;
-		cin >> A;
-		if (A % 2 == 1) {
-			Sum += A;
-			if (Min > A) {
-				Min = A;
-			}
+		int n;
+		cin >> n;
+		if (n % 2 == 1)
+		{
+			isodd = true;
+			result += n;
+			m = min(m, n);
 		}
 	}
-
-	
-	if (Sum > 0) {
-		cout << Sum << "\n" << Min;
+	if (isodd) 
+	{
+		cout << result << '\n' << m;
 	}
-	else {
-		cout << "-1";
+	else
+	{
+		cout << -1;
 	}
-
-	return 0;
 }

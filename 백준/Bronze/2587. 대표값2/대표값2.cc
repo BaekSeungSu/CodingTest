@@ -1,25 +1,22 @@
-// 백준 2587번 : 대표값2
 #include<bits/stdc++.h>
-
 using namespace std;
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
-
-	int Sum = 0;
-	int Arr[5] = {};
+	cin.tie(nullptr), cout.tie(nullptr);
+	
+	int arr[5], result = 0;
+	
 	for (int i = 0; i < 5; i++)
 	{
-		cin >> Arr[i];
-		Sum += Arr[i];
+		cin >> arr[i];
+		result += arr[i];
 	}
 
-	sort(Arr, Arr + 5);
-
-	cout << Sum / 5 << "\n" << Arr[2];
+	sort(arr, arr + 5);
 
 
-	return 0;
+	cout << result / 5 << '\n';
+	cout << arr[2];
 }

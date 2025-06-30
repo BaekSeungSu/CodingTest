@@ -1,29 +1,29 @@
-// 백준 2577 : 숫자의 개수
-
 #include<bits/stdc++.h>
-#include<cmath>
 using namespace std;
+
+int arr[10];
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr); cout.tie(nullptr);
+
 	int A, B, C;
 	cin >> A >> B >> C;
 
-	int result = A * B * C;
+	long long sum = A * B * C;
 
-	string s = to_string(result);
+	string s = to_string(sum);
 
-	int Arr[10] = {};
-
-	for (int i = 0; i < s.size(); i++)
+	for (char c : s)
 	{
-		Arr[s[i] - '0']++;
+		arr[c - '0']++;
 	}
 
-	for (int i = 0; i < 10; i++)
+	for (int i : arr)
 	{
-		cout << Arr[i] << "\n";
+		cout << i << '\n';
 	}
+	
 
-	return 0;
 }

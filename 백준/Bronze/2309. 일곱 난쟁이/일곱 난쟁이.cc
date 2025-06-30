@@ -1,38 +1,40 @@
-// 백준 2309번 : 일곱 난쟁이
 #include<bits/stdc++.h>
-
 using namespace std;
+
+int arr[9];
+int sum, n1, n2;
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
-
-	vector<int> A(9);
-	int sum = 0;
+	cin.tie(nullptr), cout.tie(nullptr);
+	
 
 	for (int i = 0; i < 9; i++)
 	{
-		cin >> A[i];
-		sum += A[i];
+		int n;
+		cin >> arr[i];
+		sum += arr[i];
 	}
 
-	sort(A.begin(), A.end());
+	sort(arr, arr + 9);
 
 	for (int i = 0; i < 8; i++)
 	{
-		for (int j = 1; j < 9; j++) {
-			if (sum - A[i] - A[j] == 100) {
-				for (int k = 0; k < 9; k++)
-				{
-					if (k == i || k == j) continue;
-					cout << A[k] << "\n";
-				}
-				return 0;
+		for (int j = i + 1; j < 9; j++)
+		{
+			if (sum - arr[i] - arr[j] == 100)
+			{
+				n1 = i;
+				n2 = j;
+				break;
 			}
 		}
 	}
 
-
-	return 0;
+	for (int i = 0; i < 9; i++)
+	{
+		if (i == n1 || i == n2) continue;
+		cout << arr[i] << '\n';
+	}
 }

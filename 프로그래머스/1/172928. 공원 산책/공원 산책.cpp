@@ -1,83 +1,66 @@
 #include <string>
 #include <vector>
-
+#include <map>
 using namespace std;
 
 vector<int> solution(vector<string> park, vector<string> routes) {
     vector<int> answer;
-    int startX;
-    int startY;
-        
-    for(int i=0; i<park.size(); i++)
+    int X = park.size();
+    int Y = park[0].size();
+    int sx;
+    int sy;
+
+    for(int i=0; i<X; i++)
     {
-        for(int j=0; j<park[i].size(); j++)
+        for(int j=0; j<Y; j++)
         {
             if(park[i][j] == 'S')
             {
-                startX = i;
-                startY = j;
+                sx = i;
+                sy = j;
+                break;
             }
         }
     }
-        
-    for(int i=0; i<routes.size(); i++)
+    
+    map<char, pair<int, int>> m;
+    m['E'] = {0, 1};
+    m['W'] = {0, -1};
+    m['S'] = {1, 0};
+    m['N'] = {-1, 0};
+    
+    for(string s : routes)
     {
-        char type = routes[i][0];
-        int move = routes[i][2] - '0';
-        int canMove = true;
-        if(type == 'E' && !(startY + move >= park[0].size()))
+        char type = s[0];
+        int n = s[2] - '0';
+        
+        int dx = m[type].first;
+        int dy = m[type].second;
+        
+        int nx = sx;
+        int ny = sy;
+        bool canMove = true;
+        
+        for(int i=0; i<n; i++)
         {
-            for(int j = 1; j <= move; j++)
+            nx += dx;
+            ny += dy;
+            if(nx <0 || ny < 0 || nx >= X || ny >= Y || park[nx][ny] == 'X')
             {
-                if(park[startX][startY + j] == 'X')
-                {
-                    canMove = false;
-                    break;
-                }
+                canMove = false;
+                break;
             }
-            if(canMove) startY += move;
-        }
-        else if(type == 'W' && !(startY - move < 0))
-        {
-            for(int j = 1; j <= move; j++)
-            {
-                if(park[startX][startY - j] == 'X')
-                {
-                    canMove = false;
-                    break;
-                }
-            }
-            if(canMove) startY -= move;
-        }
-        else if(type == 'S' && !(startX + move >= park.size()))
-        {
-            for(int j = 1; j <= move; j++)
-            {
-                if(park[startX + j][startY] == 'X')
-                {
-                    canMove = false;
-                    break;
-                }
-            }
-            if(canMove) startX += move;
-        }
-        else if(type == 'N' && !(startX - move < 0))
-        {
-            for(int j = 1; j <= move; j++)
-            {
-                if(park[startX - j][startY] == 'X')
-                {
-                    canMove = false;
-                    break;
-                }
-            }
-            if(canMove) startX -= move;
         }
         
+        if(canMove)
+        {
+            sx = nx;
+            sy = ny;
+        }
     }
     
-    answer.push_back(startX);
-    answer.push_back(startY);
-    
+    answer.push_back(sx);
+    answer.push_back(sy);
+
     return answer;
 }

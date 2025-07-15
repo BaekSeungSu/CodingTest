@@ -8,8 +8,8 @@ vector<int> solution(int k, vector<int> score) {
     vector<int> answer;
   
     priority_queue<int, vector<int>, greater<int>> pq;
-
-
+    
+    
     for (int i : score) 
     {
         pq.push(i);
@@ -19,3 +19,5 @@ vector<int> solution(int k, vector<int> score) {
 
     return answer;
 }
+
+

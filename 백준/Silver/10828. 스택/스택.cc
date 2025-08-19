@@ -1,90 +1,63 @@
 // 백준 10828 : 스택
-
-#include<iostream>
-
+#include<bits/stdc++.h>
 using namespace std;
-
-const int MX = 1000005;
-int stack[MX];
-int pos;
-
-void push(int num);
-void pop();
-void size();
-void empty();
-void top();
-
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+	cin.tie(nullptr); cout.tie(nullptr);
 
-	int N;
-	cin >> N;
+	int n;
+	cin >> n;
+	stack<int> myStack;
 
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < n; i++)
 	{
 		string s;
 		cin >> s;
 		if (s == "push")
 		{
-			int num;
-			cin >> num;
-			push(num);
+			int x;
+			cin >> x;
+			myStack.push(x);
 		}
-		else if (s == "top") top();
-		else if (s == "pop") pop();
-		else if (s == "size") size();
-		else if (s == "empty") empty();
-	}
-
-
-	return 0;
-}
-
-
-void push(int num)
-{
-	stack[pos] = num;
-	pos++;
-}
-
-void pop()
-{
-	if (pos <= 0) {
-		cout << "-1" << "\n";
-	}
-	else
-	{
-		cout << stack[pos-1] << "\n";
-		pos--;
-	}
-}
-
-void size()
-{
-	cout << pos << "\n";
-}
-
-void empty()
-{
-	if (pos <= 0) {
-		cout << "1" << "\n";
-	}
-	else
-	{
-		cout << "0" << "\n";
-	}
-}
-
-void top()
-{
-	if (pos <= 0) {
-		cout << "-1" << "\n";
-	}
-	else
-	{
-		cout << stack[pos-1] << "\n";
+		else if (s == "pop")
+		{
+			if (myStack.empty())
+			{
+				cout << -1 << '\n';
+			}
+			else
+			{
+				cout << myStack.top() << '\n';
+				myStack.pop();
+			}
+		}
+		else if (s == "size")
+		{
+			cout << myStack.size() << '\n';
+		}
+		else if (s == "empty")
+		{
+			if (myStack.empty())
+			{
+				cout << 1 << '\n';
+			}
+			else
+			{
+				cout << 0 << '\n';
+			}
+		}
+		else // top
+		{
+			if (myStack.empty())
+			{
+				cout << -1 << '\n';
+			}
+			else
+			{
+				cout << myStack.top() << '\n';
+			}
+		}
 	}
 }

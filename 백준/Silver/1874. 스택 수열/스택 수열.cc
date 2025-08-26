@@ -1,68 +1,39 @@
-// 백준 1874 : 스택 수열
-
+// 백준 1874 : 스택 수열 
 #include<bits/stdc++.h>
-
 using namespace std;
-
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+	cin.tie(nullptr); cout.tie(nullptr);
 
-	int N;
-	cin >> N;
+	int n;
+	cin >> n;
+	vector<char> ans;
+	stack<int> myStack;
 
-	vector<int> A(N, 0);
-	vector<char> result;
-	bool isCan = true;
+	int cnt = 1;
 
-	for (int i = 0; i < N; i++)
+	while (n--)
 	{
-		cin >> A[i];
+		int k;
+		cin >> k;
+		while (cnt <= k)
+		{
+			myStack.push(cnt++);
+			ans.push_back('+');
+		}
+		if (myStack.top() != k)
+		{
+			cout << "NO\n";
+			return 0;
+		}
+		myStack.pop();
+		ans.push_back('-');
 	}
 
-	stack<int> s;
-
-	int now = 1;
-
-	for (int i = 0; i < A.size(); i++)
+	for (char c : ans)
 	{
-		if (now <= A[i])
-		{
-			while (now <= A[i])
-			{
-				s.push(now);
-				now++;
-				result.push_back('+');
-			}
-			s.pop();
-			result.push_back('-');
-		}
-		else
-		{
-			int n = s.top(); 
-			s.pop();
-			if (n > A[i])
-			{
-				cout << "NO";
-				isCan = false;
-				break;
-			}
-			else
-			{
-				result.push_back('-');
-			}
-		}
+		cout << c << '\n';
 	}
-
-	if (isCan)
-	{
-		for (char c : result)
-		{
-			cout << c << "\n";
-		}
-	}
-
-	return 0;
 }

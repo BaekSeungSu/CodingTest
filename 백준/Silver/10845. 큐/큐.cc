@@ -1,90 +1,75 @@
 // 백준 10845 : 큐
-
 #include<bits/stdc++.h>
-
 using namespace std;
-
-const int MX = 1000005;
-int dat[MX];
-int head = 0, tail = 0;
-
-void push(int x) 
-{
-	dat[tail] = x;
-	tail++;
-}
-
-void pop() 
-{
-	if (head == tail) cout << "-1" << "\n";
-	else
-	{
-		cout << dat[head] << "\n";
-		head++;
-	}
-}
-
-void size()
-{
-	cout << tail - head << "\n";
-}
-
-void empty()
-{
-	if (head == tail) cout << "1" << "\n";
-	else cout << "0" << "\n";
-}
-
-void front() 
-{
-	if (head == tail) cout << "-1" << "\n";
-	else cout << dat[head] << "\n";
-}
-
-void back() 
-{
-	if (head == tail) cout << "-1" << "\n";
-	else cout << dat[tail-1] << "\n";
-}
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+	cin.tie(nullptr); cout.tie(nullptr);
 
-	int N;
-	cin >> N;
+	int n;
+	cin >> n;
 
-	for (int i = 0; i < N; i++)
+	queue<int> q;
+
+	for (int i = 0; i < n; i++)
 	{
 		string s;
 		cin >> s;
-
 		if (s == "push")
 		{
-			int x;
-			cin >> x;
-			push(x);
+			int k;
+			cin >> k;
+			q.push(k);
 		}
 		else if (s == "pop")
 		{
-			pop();
+			if (q.empty())
+			{
+				cout << "-1\n";
+			}
+			else
+			{
+				cout << q.front() << '\n';
+				q.pop();
+			}
 		}
 		else if (s == "size")
 		{
-			size();
+			cout << q.size() << '\n';
 		}
 		else if (s == "empty")
 		{
-			empty();
+			if (q.empty())
+			{
+				cout << "1\n";
+			}
+			else
+			{
+				cout << "0\n";
+			}
 		}
 		else if (s == "front")
 		{
-			front();
+			if (q.empty())
+			{
+				cout << "-1\n";
+			}
+			else
+			{
+				cout << q.front() << '\n';
+			}
 		}
 		else if (s == "back")
 		{
-			back();
+			if (q.empty())
+			{
+				cout << "-1\n";
+			}
+			else
+			{
+				cout << q.back() << '\n';
+			}
 		}
 	}
 }

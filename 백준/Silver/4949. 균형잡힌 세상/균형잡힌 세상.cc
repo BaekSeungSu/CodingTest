@@ -1,77 +1,61 @@
 // 백준 4949 : 균형잡힌 세상
-
 #include<bits/stdc++.h>
 using namespace std;
-
-
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
-	string s;
+	cin.tie(nullptr); cout.tie(nullptr);
 
-	while(true)
+
+	while (true)
 	{
+		string s;
 		getline(cin, s);
+
 		if (s == ".") break;
-		stack<char> A;
-		bool isDone = true;
+
+		stack<char> myStack;
+		bool isBalanced = true;
+
 		for (int i = 0; i < s.size(); i++)
 		{
-			if (s[i] == '(')
+			if (s[i] == '(' || s[i] == '[')
 			{
-				A.push(s[i]);
+				myStack.push(s[i]);
 			}
 			else if (s[i] == ')')
 			{
-				if (!A.empty()) {
-					if (A.top() == '(') A.pop();
-					else
-					{
-						isDone = false;
-						break;
-					}
+				if (!myStack.empty() && myStack.top() == '(')
+				{
+					myStack.pop();
 				}
-				else {
-					isDone = false;
+				else
+				{
+					isBalanced = false;
 					break;
 				}
 			}
-			else if (s[i] == '[')
-			{
-				A.push(s[i]);
-			}
 			else if (s[i] == ']')
 			{
-				if (!A.empty()) {
-					if (A.top() == '[') A.pop();
-					else
-					{
-						isDone = false;
-						break;
-					}
+				if (!myStack.empty() && myStack.top() == '[')
+				{
+					myStack.pop();
 				}
-				else {
-					isDone = false;
+				else
+				{
+					isBalanced = false;
 					break;
 				}
 			}
 		}
-
-		if (!A.empty()) isDone = false;
-
-		if (isDone)
+		if (isBalanced && myStack.empty())
 		{
-			cout << "yes" << "\n";
+			cout << "yes\n";
 		}
 		else
 		{
 			cout << "no\n";
 		}
-
 	}
-
-	return 0;
 }
-

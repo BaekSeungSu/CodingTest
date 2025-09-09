@@ -1,45 +1,51 @@
-// 백준 1926 : 그림
+// 백준 1926 : 그림 
 #include<bits/stdc++.h>
 #define X first
 #define Y second
-
-
 using namespace std;
 
-static int dx[] = { 1, 0, -1, 0 };
-static int dy[] = { 0, 1, 0, -1 };
-bool visited[502][502];
-int A[502][502];
+int dx[] = { 1, 0, -1, 0 };
+int dy[] = { 0, 1, 0, -1 };
+
+int n, m;
+vector<vector<int>> A;
+vector<vector<bool>> vis;
 
 int BFS(int x, int y)
 {
-	int width = 0;
-	visited[x][y] = true;
+	int area = 0;
 	queue<pair<int, int>> q;
-	q.push(make_pair(x, y));
+	q.push({ x,y });
+	vis[x][y] = true;
 
 	while (!q.empty())
 	{
 		pair<int, int> cur = q.front();
 		q.pop();
-		width++;
-		for (int i = 0; i < 4; i++) {
-			int nX = cur.X + dx[i];
-			int nY = cur.Y + dy[i];
-
-			if (nX < 0 || nY < 0 || nX >= 502 || nY >= 502) continue;
-			if (visited[nX][nY] || A[nX][nY] != 1) continue;
-			q.push(make_pair(nX, nY));
-			visited[nX][nY] = true;
+		area++;
+		for (int dir = 0; dir < 4; dir++)
+		{
+			int nx = cur.X + dx[dir];
+			int ny = cur.Y + dy[dir];
+			if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
+			if (vis[nx][ny] == true || A[nx][ny] != 1) continue;
+			vis[nx][ny] = true;
+			q.push({ nx, ny });
 		}
 	}
-	return width;
+
+	return area;
 }
 
 int main()
 {
-	int n, m, maxW = 0, count = 0;
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr); cout.tie(nullptr);
+
 	cin >> n >> m;
+
+	A = vector<vector<int>>(n, vector<int>(m, 0));
+	vis = vector<vector<bool>>(n, vector<bool>(m, false));
 
 	for (int i = 0; i < n; i++)
 	{
@@ -49,20 +55,23 @@ int main()
 		}
 	}
 
+	int count = 0, depth = 0;
+
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
 		{
-			if (!visited[i][j] && A[i][j] == 1)
+			if (A[i][j] == 1 && vis[i][j] == false)
 			{
-				int tmp;
-				tmp = BFS(i, j);
+				int nowD;
+				nowD = BFS(i, j);
+				depth = max(nowD, depth);
 				count++;
-				if (tmp > maxW) maxW = tmp;
 			}
 		}
 	}
 
+	cout << count << '\n' << depth;
 
-	cout << count << "\n" << maxW;
+
 }

@@ -1,94 +1,95 @@
-// 백준 4179 : 불!
+// 백준 4179 : 불
 #include<bits/stdc++.h>
 #define X first
 #define Y second
-
 using namespace std;
 
-static int dx[] = { 1, 0, -1, 0 };
-static int dy[] = { 0, 1, 0, -1 };
+int dx[] = { 1, 0, -1, 0 };
+int dy[] = { 0, 1, 0, -1 };
 
-string maze[1002];
-int fire[1002][1002];
-int jihun[1002][1002];
+int n, m;
+vector<vector<char>> board;
+vector<vector<int>> fire;
+vector<vector<int>> jihun;
+
 
 int main()
 {
 	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+	cin.tie(nullptr); cout.tie(nullptr);
+	
+	cin >> n >> m;
 
-	int R, C;
-	cin >> R >> C;
+	board = vector<vector<char>>(n, vector<char>(m, '.'));
+	fire = vector<vector<int>>(n, vector<int>(m, -1));
+	jihun = vector<vector<int>>(n, vector<int>(m, -1));
 
-	for (int i = 0; i < R; i++)
+	queue<pair<int, int>> F;
+	queue<pair<int, int>> J;
+
+	for (int i = 0; i < n; i++)
 	{
-		fill(fire[i], fire[i] + C, -1);
-		fill(jihun[i], jihun[i] + C, -1);
-	}
-
-	for (int i = 0; i < R; i++)
-	{
-		cin >> maze[i];
-	}
-
-	queue<pair<int, int>> Q1;
-	queue<pair<int, int>> Q2;
-
-	for (int i = 0; i < R; i++)
-	{
-		for (int j = 0; j < C; j++) 
+		string s;
+		cin >> s;
+		for (int j = 0; j < s.size(); j++)
 		{
-			if (maze[i][j] == 'F')
+			if (s[j] == '#')
 			{
-				fire[i][j] = 0;
-				Q1.push({ i, j });
+				board[i][j] = '#';
 			}
-			if (maze[i][j] == 'J')
+			else if (s[j] == 'J')
 			{
+				board[i][j] = 'J';
 				jihun[i][j] = 0;
-				Q2.push({ i, j });
+				J.push({ i,j });
+			}
+			else if (s[j] == 'F')
+			{
+				board[i][j] = 'F';
+				fire[i][j] = 0;
+				F.push({ i,j });
 			}
 		}
 	}
 
-	while (!Q1.empty())
+	while (!F.empty())
 	{
-		pair<int, int> cur = Q1.front();
-		Q1.pop();
-		for (int i = 0; i < 4; i++)
-		{
-			int nx = cur.X + dx[i];
-			int ny = cur.Y + dy[i];
+		auto cur = F.front();
+		F.pop();
 
-			if (nx < 0 || ny < 0 || nx >= R || ny >= C) continue;
-			if (fire[nx][ny] >= 0 || maze[nx][ny] == '#') continue;
+		for (int dir = 0; dir < 4; dir++)
+		{
+			int nx = cur.X + dx[dir];
+			int ny = cur.Y + dy[dir];
+
+			if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
+			if (fire[nx][ny] != -1 || board[nx][ny] == '#') continue;
 			fire[nx][ny] = fire[cur.X][cur.Y] + 1;
-			Q1.push({ nx, ny });
+			F.push({ nx, ny });
 		}
 	}
 
-	while (!Q2.empty())
+	while (!J.empty())
 	{
-		pair<int, int> cur = Q2.front();
-		Q2.pop();
-		for (int i = 0; i < 4; i++)
-		{
-			int nx = cur.X + dx[i];
-			int ny = cur.Y + dy[i];
+		auto cur = J.front();
+		J.pop();
 
-			if (nx < 0 || ny < 0 || nx >= R || ny >= C)
+		for (int dir = 0; dir < 4; dir++)
+		{
+			int nx = cur.X + dx[dir];
+			int ny = cur.Y + dy[dir];
+			if (nx < 0 || ny < 0 || nx >= n || ny >= m)
 			{
 				cout << jihun[cur.X][cur.Y] + 1;
 				return 0;
 			}
-			if (jihun[nx][ny] >= 0 || maze[nx][ny] == '#') continue;
+			if (jihun[nx][ny] != -1 || board[nx][ny] != '.') continue;
 			if (fire[nx][ny] != -1 && fire[nx][ny] <= jihun[cur.X][cur.Y] + 1) continue;
 			jihun[nx][ny] = jihun[cur.X][cur.Y] + 1;
-			Q2.push({ nx, ny });
+			J.push({ nx, ny });
 		}
-	}
 
+	}
 	cout << "IMPOSSIBLE";
-	
 	return 0;
 }
